@@ -17,7 +17,7 @@ const useAppContext = () => React.useContext(AppContext);
 const useFetch = (): { value: IContext } => {
     
     const [table, setTable] = useState<Array<ITable>>([]);
-
+    
     const handleTable = (newTable: ITable) => {
         setTable([ ...table, newTable ]);
     }

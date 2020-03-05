@@ -3,8 +3,9 @@
 
 ## Todo
 - [x] Static Custom Table 
-- [ ] Dynamic Custom Table
+- [x] Dynamic Custom Table Part 1.
+- [ ] Dynamic Custom Table Part 2.
 
 ## Install
-> yarn create react-app ./ --template -typescript
-> yarn add styled-components @types/styled-components
+- yarn create react-app ./ --template -typescript
+- yarn add styled-components @types/styled-components
