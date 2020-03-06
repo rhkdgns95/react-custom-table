@@ -3,11 +3,13 @@ interface ITable {
     column: number;
     title: string;
 }
+
 interface IUseInputNumber {
     value: number;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 interface IUseInputString {
     value: string;
+    name?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

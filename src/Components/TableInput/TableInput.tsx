@@ -6,6 +6,7 @@ const useArrayRef = (length: number) => Array.from({ length }, () => createRef()
 const useArrayRef2 = (rowLength: number, columnLength: number) => Array.from({ length: rowLength }, () => Array.from({ length: columnLength }, () => createRef()));
 
 interface IProps {
+    key: number;
     title: string;
     row: number;
     column: number;
@@ -13,10 +14,11 @@ interface IProps {
 }
 
 const Table: React.FC<IProps> = ({
+    key,
     title,
     row,
     column,
-    thArray
+    thArray,
 }) => {
     const [cursorRow, setCursorRow] = useState<number>(0);
     const [cursorColumn, setCursorColumn] = useState<number>(0);
@@ -98,7 +100,7 @@ const Table: React.FC<IProps> = ({
     }
 
     return (
-        <Container>
+        <Container key={key}>
             <Wrapper>
                 <TableHeader>{ title }</TableHeader>
                 <NumberBox>
@@ -111,7 +113,7 @@ const Table: React.FC<IProps> = ({
                 </NumberBox>
                 <Form>
                     <FormTable onKeyDown={onKeyDown}>
-                        <Thead>
+                        {/* <Thead>
                             <Tr>
                                 <Th>
                                     월
@@ -129,7 +131,7 @@ const Table: React.FC<IProps> = ({
                                     급여
                                 </Th>    
                             </Tr>
-                        </Thead>
+                        </Thead> */}
                         <Tbody>
                             {
                                 newRefs.map((refs: any, row: number) => 
@@ -155,9 +157,6 @@ const Table: React.FC<IProps> = ({
                         </Tbody>
                     </FormTable>
                 </Form>
-                <Button>
-                    Click
-                </Button>
            </Wrapper>
         </Container>
     );
@@ -165,12 +164,13 @@ const Table: React.FC<IProps> = ({
 };
 
 const Container = styled.div`
+    width: 100%;
     * {
         box-sizing: border-box;
     }
 `;
 const Wrapper = styled.div`
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
     border: 1px solid #24a4ff;
 `;
@@ -194,7 +194,8 @@ const FormTable = styled.table`
     border-spacing: 0;
     border-collapse: collapse;
     background-color: #dcdcdc;
-    width: 100%;
+    width: 97%;
+    margin: 0 auto;
 `;
 
 const Thead = styled.thead`
