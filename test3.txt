@@ -1,0 +1,111 @@
+import { render } from 'react-dom';
+import './index.css';
+import * as React from 'react';
+import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Edit, Toolbar } from '@syncfusion/ej2-react-grids';
+import { orderDataSource } from './data';
+import { SampleBase } from './sample-base';
+import { PropertyPane } from './property-pane';
+import { DropDownListComponent, AutoCompleteComponent } from '@syncfusion/ej2-react-dropdowns';
+
+export class NormalEdit extends SampleBase {
+  constructor() {
+    super(...arguments);
+    this.toolbarOptions = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
+    this.editSettings = { allowEditing: false, allowAdding: true, allowDeleting: true, newRowPosition: 'Top' };
+    this.editparams = { params: { popupHeight: '300px' } };
+    this.validationRule = { required: true };
+    this.orderidRules = { required: true, number: true };
+    this.pageSettings = { pageCount: 5 };
+    this.gScrollLeft = 0;
+    this.focusIndex = null;
+  }
+  actionBegin(args) {
+    if (args.requestType == "beginEdit") {
+      this.focusIndex = document.activeElement.cellIndex;
+      this.gScrollLeft = this.gridInstance.getContentTable().parentElement.scrollLeft;
+    }
+
+  }
+  actionComplete(args) {
+    if (args.requestType == "beginEdit") {
+      args.row.querySelector('#' + this.gridInstance.element.id + this.gridInstance.columns[this.focusIndex].field).select();
+      this.gridInstance.getContentTable().parentElement.scrollLeft = this.gScrollLeft
+    }
+  }
+  render() {
+    return (<div className='control-pane'>
+      <div className='control-section'>
+        <div className='col-md-9'>
+          <GridComponent 
+            dataSource={orderDataSource} 
+            width={"100%"} 
+            actionComplete={this.actionComplete.bind(this)} 
+            ref={grid => this.gridInstance = grid} 
+            toolbar={this.toolbarOptions} 
+            allowPaging={true} 
+            editSettings={this.editSettings} 
+            pageSettings={this.pageSettings} 
+            actionBegin={this.actionBegin.bind(this)}
+          >
+            <ColumnsDirective>
+              <ColumnDirective field='OrderID' headerText='Order ID' width='140' textAlign='Right' validationRules={this.orderidRules} isPrimaryKey={true}></ColumnDirective>
+
+
+              <ColumnDirective 
+                  // field='CustomerName' 
+                  // headerText='Customer Name' 
+                  width='150' 
+                  validationRules={this.validationRule}
+                  template={data => { 
+
+                      return <MCAutoCompleteComponent value={data.ShipCountry}/>
+                  }}  
+              />
+
+
+
+
+
+              <ColumnDirective field='Freight' headerText='Freight' width='140' format='C2' textAlign='Right' editType='numericedit'></ColumnDirective>
+
+              <ColumnDirective field='ShipCountry' headerText='Ship Country' width='150' editType='dropdownedit' edit={this.editparams}></ColumnDirective>
+              
+            </ColumnsDirective>
+            <Inject services={[Page, Toolbar]} />
+          </GridComponent>
+        </div>
+      </div>
+    </div>
+    );
+  }
+}
+const localFields = { value: 'Name' };
+const data = [
+  {
+    Code: "KO",
+    Name: "Korea"
+  },
+  {
+    Code: "EN",
+    Name: "English"
+  },
+  {
+    Code: "GE",
+    Name: "Germany"
+  }
+]
+const MCAutoCompleteComponent = (props) => {
+  console.log("PROPS: ", props);
+  return (
+  <AutoCompleteComponent id="country" 
+  
+  dataSource={data} ref={(autocomplete) => { this.localDataObj = autocomplete; }} fields={localFields} popupHeight="250px" 
+  placeholder="e.g. Australia" 
+  autofill={true} 
+  { ...props } 
+  filterType='StartsWith'/>
+);
+}
+ 
+
+render(<NormalEdit />, document.getElementById('sample'));

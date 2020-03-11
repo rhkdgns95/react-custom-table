@@ -1,0 +1,136 @@
+import { render } from 'react-dom';
+import './index.css';
+import * as React from 'react';
+import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Edit, Toolbar } from '@syncfusion/ej2-react-grids';
+import { orderDataSource } from './data';
+import { SampleBase } from './sample-base';
+import { PropertyPane } from './property-pane';
+import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
+// import { myOrderDataSource } from "./myData";
+import { enableRipple } from '@syncfusion/ej2-base';
+enableRipple(true);
+
+
+// const URL = "https://official-joke-api.appspot.com/jokes/programming/random";
+const URL = "https://jsonplaceholder.typicode.com/users";
+
+const MyEdit = () => {
+  
+  const [fetchData, setFetchData ] = React.useState({});
+
+  React.useEffect(async () => {
+    console.log("My Edit useEFFect()");
+    const response = await fetch(URL, { method: "GET" });
+    if(response.ok && response.status === 200) {
+      console.log("Success");
+      fetchData = JSON.parse(await response.text());
+      console.log("fetchData: ", fetchData);
+      const { headers } = response;
+      setFetchData(fetchData);
+    } else {
+      console.log("Failed");
+    }
+    console.log("response: ", response);
+  }, []);
+
+  var toolbarOptions = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
+  var editSettings = { allowEditing: true, allowAdding: true, allowDeleting: true, newRowPosition: 'Top' };
+  var editparams = { params: { popupHeight: '800px' } };
+  var validationRule = { required: true };
+  var orderidRules = { required: true, number: true };
+  var pageSettings = { pageCount: 5 };
+  var gScrollLeft = 0;
+  var focusIndex = null;
+
+
+  function actionBegin(args) {
+    if (args.requestType == "beginEdit") {
+      focusIndex = document.activeElement.cellIndex;
+      gScrollLeft = gridInstance.getContentTable().parentElement.scrollLeft;
+    }
+  };
+
+  function actionComplete(args) {
+    if (args.requestType == "beginEdit") {
+      args.row.querySelector('#' + gridInstance.element.id + gridInstance.columns[focusIndex].field).select();
+      gridInstance.getContentTable().parentElement.scrollLeft = gScrollLeft
+    }
+  }; 
+  // console.log("myOrderDataSource: ", myOrderDataSource);
+  var gridInstance  = {};
+  console.log("gridInstance: ", gridInstance);
+
+  return (
+    <div className='control-pane' style={{ width: "100%"}}>
+      <div className='control-section'>
+        <div className='col-md-9'>
+          <GridComponent dataSource={fetchData} width={"100%"} actionComplete={actionComplete(this)} ref={grid => gridInstance = grid} toolbar={toolbarOptions} allowPaging={true} editSettings={editSettings} pageSettings={pageSettings} actionBegin={actionBegin(this)}>
+            <ColumnsDirective>
+              <ColumnDirective field='id' headerText='id' width='140' textAlign='Right' validationRules={orderidRules} isPrimaryKey={true}></ColumnDirective>
+              
+              <ColumnDirective field='name' headerText='name' width='140' format='C2' textAlign='Right' editType=''></ColumnDirective>
+
+              <ColumnDirective field='username' headerText='username' width='150' editType='dropdownedit' edit={editparams}></ColumnDirective>
+            </ColumnsDirective>
+            <Inject services={[Page, Toolbar]} />
+          </GridComponent>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+
+
+
+// export class NormalEdit extends SampleBase {
+//   constructor() {
+//     console.log("myOrderDataSource: ", myOrderDataSource);
+//     super(...arguments);
+//     this.toolbarOptions = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
+//     this.editSettings = { allowEditing: true, allowAdding: true, allowDeleting: true, newRowPosition: 'Top' };
+//     this.editparams = { params: { popupHeight: '800px' } };
+//     this.validationRule = { required: true };
+//     this.orderidRules = { required: true, number: true };
+//     this.pageSettings = { pageCount: 5 };
+//     this.gScrollLeft = 0;
+//     this.focusIndex = null;
+//   }
+  
+//   actionBegin(args) {
+//     if (args.requestType == "beginEdit") {
+//       this.focusIndex = document.activeElement.cellIndex;
+//       this.gScrollLeft = this.gridInstance.getContentTable().parentElement.scrollLeft;
+//     }
+//   }
+
+//   actionComplete(args) {
+//     if (args.requestType == "beginEdit") {
+//       args.row.querySelector('#' + this.gridInstance.element.id + this.gridInstance.columns[this.focusIndex].field).select();
+//       this.gridInstance.getContentTable().parentElement.scrollLeft = this.gScrollLeft
+//     }
+//   }
+
+//   render() {
+//     return (<div className='control-pane' style={{ width: "100%"}}>
+//       <div className='control-section'>
+//         <div className='col-md-9'>
+//           <GridComponent dataSource={myOrderDataSource} width={"100%"} actionComplete={this.actionComplete.bind(this)} ref={grid => this.gridInstance = grid} toolbar={this.toolbarOptions} allowPaging={true} editSettings={this.editSettings} pageSettings={this.pageSettings} actionBegin={this.actionBegin.bind(this)}>
+//             <ColumnsDirective>
+//               <ColumnDirective field='OrderID' headerText='Order ID' width='140' textAlign='Right' validationRules={this.orderidRules} isPrimaryKey={true}></ColumnDirective>
+              
+//               <ColumnDirective field='Freight' headerText='Freight' width='140' format='C2' textAlign='Right' editType='numericedit'></ColumnDirective>
+
+//               <ColumnDirective field='ShipCountry' headerText='Ship Country' width='150' editType='dropdownedit' edit={this.editparams}></ColumnDirective>
+//             </ColumnsDirective>
+//             <Inject services={[Page, Toolbar]} />
+//           </GridComponent>
+//         </div>
+//       </div>
+//     </div>
+//     );
+//   }
+// }
+
+render(<MyEdit />, document.getElementById('sample'));

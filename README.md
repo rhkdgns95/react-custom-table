@@ -1,6 +1,10 @@
 # CareDa
-- 날짜: 03.09(월)
-- 내용: Admin Template 중간점검
+
+1. 03.09(월)
+> - 내용: Admin Template 중간점검.
+
+2. 03.12(목)
+> - 내용: Admin Template, Grid 결정.
 
 ## Todo
 
@@ -15,7 +19,6 @@
 > - 300개 이상의 UI 구성 요소, 150개 이상의 위젯 및 메트릭, 25개 이상의 완전 레이어 PSD 및 130개 이상의 디자인 된 페이지를 제공.
 > - RTL 지원 및 5개 언어로 된 다국어 구현은 이미 점보 리액트에서 다룸(따라서 전 세계의 모든 잠재 고객을 다루는 것에 대해 안심해도 됨)
 
-
 2. <a href="https://themeforest.net/item/flexile-react-redux-admin-template/22277962">Flexile</a>
 > - No jQuery.
 > - Flexile은 Ant Design 개념 및 프레임 워크를 기반으로하는 강력한 반응 관리 템플릿.
@@ -26,6 +29,8 @@
 > - LESS (Ant Design에서 권장), Redux, Redux-Saga를 사용하여 상태를 관리.
 
 3. <a href="https://keenthemes.com/metronic/">Metronic</a>
+
+4. <a href="https://themeforest.net/item/fuse-react-react-redux-material-design-admin-template/21769397?irgwc=1&clickid=WpRxSk1cMxyOTgRwUx0Mo3QwUknXbJydcVssUc0&iradid=275988&irpid=1257954&iradtype=ONLINE_TRACKING_LINK&irmptype=mediapartner&mp_value1=&utm_campaign=af_impact_radius_1257954&utm_medium=affiliate&utm_source=impact_radius">Fuse - React Admin Template Material Design</a>
 
 #### 2. 그리드 
 1. <a href="https://js.devexpress.com/Overview/React/">devExpress</a>
@@ -66,8 +71,24 @@
 5. <a href="http://tabler-react.com/">Tabler</a> - ★★★☆☆
 > - 활용하기 편리함.
 
+#### 4. 결과
 
+1. 템플릿
+> | No | Template | Released | Last update | Sales | 호환성 | 문서 | 내용 | 기타 |
+> | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+> | 1 | <a href="https://jumbo-react.g-axon.work/app/dashboard/crm">Jumbo React</a> | 18-01-11 | 20-02-09 | 2,020 | IE11, Firefox, Safari, Opera, Chrome, Edge |  <a href="http://docs.g-axon.work/jumbo-react/">링크</a> | 컴포넌트 문서화가 잘 되어 있어서, 활용하기 좋음 | - |
+> | 2 | <a href="http://react-material.fusetheme.com/apps/dashboards/analytics">Fuse React</a> | 18-04-18 | <span style="color: #18ccbb;">20-03-07</a> | 3,643 | Firefox, Safari, Opera, Chrome, Edge | <a href="http://react-material.fusetheme.com/documentation/working-with-fuse-react/project-structure">링크</a> | React Hooks 및 Redux 지원 <a href="http://fusetheme.com/static/assets/react/learning-source.png">Learning source </a>  | - |
+> | 3 | <a href="https://demos.creative-tim.com/material-dashboard-pro-react/#/admin/dashboard">Material Dashboard Pro React</a> | 1년 전 | 6개월 전 | 2,773 | Firefox, Safari, Opera, Chrome, Edge | <a href="https://demos.creative-tim.com/material-dashboard-pro-react/#/documentation/tutorial">링크</a> | React Hooks 지원, Style 문서화가 잘 되어있음 | - |
+> | 4 | <a href="https://reactify.theironnetwork.org/app/dashboard/ecommerce">Reactify</a> | 18-04-16 | 20-01-12 | 994 | 	IE11, Firefox, Safari, Opera, Chrome, Edge | <a href="https://docs.theironnetwork.org/reactify/app-bar/">링크</a> | 문서 참고하기 불편 | - |
+> | 5 | <a href="http://preview.themeforest.net/item/flexile-react-redux-admin-template/full_screen_preview/22277962?_ga=2.263918284.1739860313.1583806664-580874507.1583225587">Flexile</a> | 18-07-18 | <span style="color: #ff6d6d">19-07-03</a> | 117 | IE11, Firefox, Safari, Opera, Chrome, Edge | <a href="http://docs.g-axon.work/flexile/">링크</a> | <a href="https://ant.design/docs/react/introduce">Ant Design</a>의 UI를 사용하므로, Ant Design 문서를 참고 해야함 | - |
 
+2. 그리드
+> | No | Name | 내용 | 비고 |
+> | :--: | :-------: | :----: | :---: |
+> | 1 | <a href="https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/Overview/React/Light/">devExpress</a> | - | - |
+> | 2 | <a href="https://ej2.syncfusion.com/home/react.html">syncfusion</a> | <a href="https://ej2.syncfusion.com/react/demos/#/material/spreadsheet/default">SpreadSheet</a>, <a href="https://ej2.syncfusion.com/react/demos/#/material/document-editor/default">Editor</a> 기능들이 우수.<br/> <a href="https://www.syncfusion.com/forums/search?searchword=react%20table">Forum search</a>. <br/>기본 장치를 기반으로 매우 잘 렌더링 됨.<br/> - | - |
+> | 3 | <a href="https://www.jqwidgets.com/react/">jqwidget</a> | - | - |
 
-
-
+3. Test
+> - <a href="https://stackblitz.com/edit/react-ed7gnm?file=index.js ">syncfusion - autofill</a> - test3.txt
+> - <a href="https://ej2.syncfusion.com/react/demos/#/material/grid/filter-menu">syncfusion - sort + filter</a> - test4.txt
