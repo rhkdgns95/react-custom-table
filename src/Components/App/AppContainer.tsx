@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Button from 'devextreme-react/button';
 import { Switch, BrowserRouter, Router, Route, Redirect } from 'react-router-dom';
 import DevExpress from '../../Routes/DevExpress';
+import Sample from '../../Routes/Sample';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -18,6 +19,7 @@ const AppPresenter = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path={"/devExpress"} component={DevExpress}/>
+            <Route exact path={"/sample"} component={Sample}/>
             <Redirect to={"/"} from={"*"}/>
         </Switch>
     </BrowserRouter>
