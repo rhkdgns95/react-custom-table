@@ -75,7 +75,7 @@
 
 1. 템플릿
 > | No | Template | Released | Last update | Sales | 호환성 | 문서 | 내용 | 기타 |
-> | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+> | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 > | 1 | <a href="https://jumbo-react.g-axon.work/app/dashboard/crm">Jumbo React</a> | 18-01-11 | 20-02-09 | 2,020 | IE11, Firefox, Safari, Opera, Chrome, Edge |  <a href="http://docs.g-axon.work/jumbo-react/">링크</a> | 컴포넌트 문서화가 잘 되어 있어서, 활용하기 좋음 | - |
 > | 2 | <a href="http://react-material.fusetheme.com/apps/dashboards/analytics">Fuse React</a> | 18-04-18 | <span style="color: #18ccbb;">20-03-07</a> | 3,643 | Firefox, Safari, Opera, Chrome, Edge | <a href="http://react-material.fusetheme.com/documentation/working-with-fuse-react/project-structure">링크</a> | React Hooks 및 Redux 지원 <a href="http://fusetheme.com/static/assets/react/learning-source.png">Learning source </a>  | - |
 > | 3 | <a href="https://demos.creative-tim.com/material-dashboard-pro-react/#/admin/dashboard">Material Dashboard Pro React</a> | 1년 전 | 6개월 전 | 2,773 | Firefox, Safari, Opera, Chrome, Edge | <a href="https://demos.creative-tim.com/material-dashboard-pro-react/#/documentation/tutorial">링크</a> | React Hooks 지원, Style 문서화가 잘 되어있음 | - |
