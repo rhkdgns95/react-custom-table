@@ -1,12 +1,4 @@
-# CareDa
-
-1. 03.09(월)
-> - 내용: Admin Template 중간점검.
-
-2. 03.12(목)
-> - 내용: Admin Template, Grid 결정.
-
-## Todo
+## 케어다 템플릿
 
 #### 1. 어드민 템플릿
 

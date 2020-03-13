@@ -17,6 +17,7 @@
     "@types/styled-components": "^5.0.1",
     "devextreme": "19.2",
     "devextreme-react": "19.2",
+    "html-react-parser": "^0.10.1",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
