@@ -8,6 +8,7 @@ import { Switch, BrowserRouter, Router, Route, Redirect } from 'react-router-dom
 import DevExpress from '../../Routes/DevExpress';
 import Sample from '../../Routes/Sample';
 import ParsedHtml from '../../Routes/ParsedHtml';
+import ParsedIncome from '../../Routes/ParsedIncome';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -22,6 +23,7 @@ const AppPresenter = () => (
             <Route exact path={"/devExpress"} component={DevExpress}/>
             <Route exact path={"/sample"} component={Sample}/>
             <Route exact path={"/parsedHtml"} component={ParsedHtml}/>
+            <Route exact path={"/parsedIncome"} component={ParsedIncome}/>
             <Redirect to={"/"} from={"*"}/>
         </Switch>
     </BrowserRouter>

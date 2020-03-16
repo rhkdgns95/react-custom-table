@@ -2,38 +2,64 @@ import React from 'react';
 import parse from "html-react-parser";
 // const parse = require('html-react-parser');
 
-interface IProps {
-  data: Array<any>
-};
+interface IWeekendReport {
+    content: string;
+    status: boolean;
+    output: string;
+    etc: string;
+}
 const ParsedHtmlContainer = () => {
-    const data = [
+    const data: Array<IWeekendReport> = [
         {
-          content: "나의 업무내용1"
+          content: "나의 업무내용1",
+          status: true,
+          output: "PDF",
+          etc: "1번째라인 비고"
         },
         {
-          content: "나의 업무내용2"
+          content: "나의 업무내용2",
+          status: true,
+          output: "WORD",
+          etc: "2번째라인 비고"
         },
         {
-          content: "나의 업무내용3"
+          content: "나의 업무내용3",
+          status: false,
+          output: "MS",
+          etc: "3번째라인 비고"
         },
         {
-          content: "나의 업무내용4"
+          content: "나의 업무내용4",
+          status: true,
+          output: "PDF",
+          etc: "4번째라인 비고"
         },
         {
-          content: "나의 업무내용5"
+          content: "나의 업무내용5",
+          status: true,
+          output: "PDF",
+          etc: "5번째라인 비고"
         },
         {
-          content: "나의 업무내용6"
+          content: "나의 업무내용6",
+          status: true,
+          output: "WORD",
+          etc: "6번째라인 비고"
         },
         {
-          content: "나의 업무내용7"
+          content: "나의 업무내용7",
+          status: true,
+          output: "TEXT",
+          etc: "7번째라인 비고"
         },
         {
-          content: "나의 업무내용8"
+          content: "나의 업무내용8",
+          status: true,
+          output: "ETC",
+          etc: "8번째라인 비고"
         },
-    
       ]
-      console.log("parse: ", parse);
+    //   console.log("parse: ", parse);
     return (
         <>
             <ParsedHtml data={data}/>
@@ -41,10 +67,45 @@ const ParsedHtmlContainer = () => {
     )
 }
 
-
-const ParsedHtml = ({
+interface IProps {
+    data: Array<IWeekendReport>;
+}
+const ParsedHtml: React.FC<IProps> = ({
   data
 }) => {
+    let result = "";
+    data.map(item => {
+        result = `
+            ${ result }
+            <tr style='mso-yfti-irow:5;height:19.35pt'>
+                <td width=282 style='width:211.6pt;border:solid black 1.0pt;border-top:none;
+                mso-border-top-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:19.35pt'>
+                <p class=DefaultParagraphStyle style='line-height:normal'><span
+                style='font-family:"바탕",serif;mso-ascii-font-family:Gothic;mso-ascii-theme-font:
+                minor-latin;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Gothic;
+                mso-hansi-theme-font:minor-latin'>${ item.content }</span></p>
+                </td>
+                <td width=109 style='width:81.65pt;border-top:none;border-left:none;
+                border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
+                solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+                height:19.35pt'>
+                <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US>${ item.status ? "완결" : "미완결" }</span></p>
+                </td>
+                <td width=133 style='width:99.75pt;border-top:none;border-left:none;
+                border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
+                solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+                height:19.35pt'>
+                <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US>${ item.output }</span></p>
+                </td>
+                <td width=77 style='width:57.7pt;border-top:none;border-left:none;border-bottom:
+                solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+                mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:
+                19.35pt'>
+                <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US>${ item.etc }</span></p>
+                </td>
+            </tr>
+        `;
+    });
     return (
         <>
             {
@@ -1107,12 +1168,11 @@ const ParsedHtml = ({
                 <body lang=KO style='tab-interval:40.0pt'>
                 
                 <div class=WordSection1>
-                
                 <p class=MsoNormal><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                
                 <table class=DefaultTableStyle border=0 cellspacing=0 cellpadding=0 width=601
                  style='width:450.7pt;border-collapse:collapse;mso-yfti-tbllook:1184;
                  mso-padding-alt:0cm 0cm 0cm 0cm'>
+                 <tbody>
                  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:17.85pt;mso-row-margin-right:
                   157.45pt'>
                   <td width=282 rowspan=3 style='width:211.6pt;border:none black 1.0pt;
@@ -1228,192 +1288,7 @@ const ParsedHtml = ({
                   10.0pt;font-family:"나눔고딕",serif;mso-hansi-font-family:나눔고딕'>비고</span></b></span></p>
                   </td>
                  </tr>
-                 <tr style='mso-yfti-irow:5;height:19.35pt'>
-                  <td width=282 style='width:211.6pt;border:solid black 1.0pt;border-top:none;
-                  mso-border-top-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span
-                  style='font-family:"바탕",serif;mso-ascii-font-family:Gothic;mso-ascii-theme-font:
-                  minor-latin;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Gothic;
-                  mso-hansi-theme-font:minor-latin'>${ data[0].content }</span></p>
-                  </td>
-                  <td width=109 style='width:81.65pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=133 style='width:99.75pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=77 style='width:57.7pt;border-top:none;border-left:none;border-bottom:
-                  solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-                  mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:
-                  19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                 </tr>
-                 <tr style='mso-yfti-irow:6;height:19.35pt'>
-                  <td width=282 style='width:211.6pt;border:solid black 1.0pt;border-top:none;
-                  mso-border-top-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span
-                  style='font-family:"바탕",serif;mso-ascii-font-family:Gothic;mso-ascii-theme-font:
-                  minor-latin;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Gothic;
-                  mso-hansi-theme-font:minor-latin'>${data[1].content}</span></p>
-                  </td>
-                  <td width=109 style='width:81.65pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=133 style='width:99.75pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=77 style='width:57.7pt;border-top:none;border-left:none;border-bottom:
-                  solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-                  mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:
-                  19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                 </tr>
-                 <tr style='mso-yfti-irow:7;height:19.35pt'>
-                  <td width=282 style='width:211.6pt;border:solid black 1.0pt;border-top:none;
-                  mso-border-top-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=109 style='width:81.65pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=133 style='width:99.75pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=77 style='width:57.7pt;border-top:none;border-left:none;border-bottom:
-                  solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-                  mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:
-                  19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                 </tr>
-                 <tr style='mso-yfti-irow:8;height:19.35pt'>
-                  <td width=282 style='width:211.6pt;border:solid black 1.0pt;border-top:none;
-                  mso-border-top-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=109 style='width:81.65pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=133 style='width:99.75pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=77 style='width:57.7pt;border-top:none;border-left:none;border-bottom:
-                  solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-                  mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:
-                  19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                 </tr>
-                 <tr style='mso-yfti-irow:9;height:19.35pt'>
-                  <td width=282 style='width:211.6pt;border:solid black 1.0pt;border-top:none;
-                  mso-border-top-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=109 style='width:81.65pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=133 style='width:99.75pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=77 style='width:57.7pt;border-top:none;border-left:none;border-bottom:
-                  solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-                  mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:
-                  19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                 </tr>
-                 <tr style='mso-yfti-irow:10;height:19.35pt'>
-                  <td width=282 style='width:211.6pt;border:solid black 1.0pt;border-top:none;
-                  mso-border-top-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=109 style='width:81.65pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=133 style='width:99.75pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=77 style='width:57.7pt;border-top:none;border-left:none;border-bottom:
-                  solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-                  mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:
-                  19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                 </tr>
-                 <tr style='mso-yfti-irow:11;height:19.35pt'>
-                  <td width=282 style='width:211.6pt;border:solid black 1.0pt;border-top:none;
-                  mso-border-top-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=109 style='width:81.65pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=133 style='width:99.75pt;border-top:none;border-left:none;
-                  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:
-                  solid black 1.0pt;mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                  <td width=77 style='width:57.7pt;border-top:none;border-left:none;border-bottom:
-                  solid black 1.0pt;border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-                  mso-border-left-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:
-                  19.35pt'>
-                  <p class=DefaultParagraphStyle style='line-height:normal'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                 </tr>
-                 <tr style='mso-yfti-irow:12;height:19.35pt'>
-                  <td width=601 colspan=4 style='width:450.7pt;border:solid black 1.0pt;
-                  border-top:none;mso-border-top-alt:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
-                  height:19.35pt'>
-                  <p class=DefaultParagraphStyle style='margin-left:56.0pt;text-indent:-18.0pt;
-                  line-height:75%;mso-list:l0 level1 lfo2'><![if !supportLists]><span
-                  lang=EN-US style='mso-ascii-font-family:Gothic;mso-fareast-font-family:Gothic;
-                  mso-hansi-font-family:Gothic;mso-bidi-font-family:Gothic'><span
-                  style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </span></span></span><![endif]><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
-                  </td>
-                 </tr>
+                ${ result }
                  <tr style='mso-yfti-irow:13;height:19.35pt'>
                   <td width=282 style='width:211.6pt;border-top:none;border-left:none black 1.0pt;
                   border-bottom:solid black 1.5pt;border-right:none black 1.0pt;mso-border-top-alt:
@@ -1694,6 +1569,7 @@ const ParsedHtml = ({
                   lang=EN-US>.</span></span></span></p>
                   </td>
                  </tr>
+                 </tbody>
                 </table>
                 <p class=MsoNormal><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
                 </div>
