@@ -9,6 +9,7 @@ import DevExpress from '../../Routes/DevExpress';
 import Sample from '../../Routes/Sample';
 import ParsedHtml from '../../Routes/ParsedHtml';
 import ParsedIncome from '../../Routes/ParsedIncome';
+import Portal from '../../Routes/Portal';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -21,9 +22,10 @@ const AppPresenter = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path={"/devExpress"} component={DevExpress}/>
-            <Route exact path={"/sample"} component={Sample}/>
-            <Route exact path={"/parsedHtml"} component={ParsedHtml}/>
-            <Route exact path={"/parsedIncome"} component={ParsedIncome}/>
+            <Route path={"/sample"} component={Sample}/>
+            <Route path={"/parsedHtml"} component={ParsedHtml}/>
+            <Route path={"/parsedIncome"} component={ParsedIncome}/>
+            <Route path={"/portal"} component={Portal}/>
             <Redirect to={"/"} from={"*"}/>
         </Switch>
     </BrowserRouter>

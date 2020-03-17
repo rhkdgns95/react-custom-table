@@ -17,7 +17,9 @@ const useInput = (name: string) => {
         onChange
     };
 };
-
+/**
+ *  배열 테이블을 사용하는 것임.
+ */
 const SampleContainer = () => (
     <SamplePresenter />
 );

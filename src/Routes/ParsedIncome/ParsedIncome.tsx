@@ -1,5 +1,6 @@
 import React from 'react';
 import parse, {} from "html-react-parser";
+import HtmlContainer from '../../Components/HtmlContainer';
 
 const ParsedIncomeContainer = () => {
     
@@ -11,13 +12,7 @@ const ParsedIncomeContainer = () => {
 
 const ParsedIncomePresenter = () => {
 
-    const parsed = parse(
-        `
-        
-
-
-<div class=WordSection1>
-
+    const parsed =` <div class='WordSection1 test'>
 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=678
  style='margin-left:1.4pt;border-collapse:collapse;mso-table-layout-alt:fixed;
  border:none;mso-border-alt:solid black .5pt;mso-table-overlap:never;
@@ -534,7 +529,7 @@ const ParsedIncomePresenter = () => {
   lang=EN-US style='font-family:돋움체;mso-hansi-font-family:"맑은 고딕";mso-hansi-theme-font:
   minor-latin;letter-spacing:-.65pt'> </span><span style='font-family:돋움체;
   mso-hansi-font-family:"맑은 고딕";mso-hansi-theme-font:minor-latin;letter-spacing:
-  -.65pt'>주 민 등 록 번 호<span lang=EN-US> 950413 -1410812</span></span></p>
+  -.65pt'>주 민 등 록 번 호<span lang=EN-US> 950413 -141XXXX</span></span></p>
   </div>
   </td>
   <![if !supportMisalignedRows]>
@@ -24931,16 +24926,10 @@ none black 0cm;padding:0cm 0cm 0cm 0cm'>
 </div>
 
 </div>
-
-
-        `
-    );
-
+`;
     return (
         <>
-            {
-                parsed
-            }
+            <HtmlContainer html={parsed} />
         </>
     );
 };
