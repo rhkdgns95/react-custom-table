@@ -10,10 +10,9 @@ const ModalLayoutContainer: React.FC<IProps> = ({
     children,
     isOpen
 }) => {
-    const ref = useRef<any>({});
     const rootRef = document.getElementById('root-modal');
 
-    return ( isOpen && ref.current && rootRef ) ? createPortal(
+    return ( isOpen && rootRef ) ? createPortal(
         <Container>
             { children }
         </Container>,
