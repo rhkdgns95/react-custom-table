@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 
 interface IContext {
-    table: Array<ITable>
+    isLoggedIn: boolean;
+    table: Array<ITable>;
+    handleToggleLogged: () => any;
     handleCreateTable: (newTable: ITable) => void;
     handleDeleteTable: (deleteIndex: number) => void;
 }
 
 const InitContext: IContext = {
+    isLoggedIn: false,
     table: [],
+    handleToggleLogged: () => {},
     handleCreateTable: () => {},
     handleDeleteTable: () => {}
 }
@@ -17,9 +21,13 @@ const AppContext: React.Context<IContext> = React.createContext(InitContext);
 const useAppContext = () => React.useContext(AppContext);
 
 const useFetch = (): { value: IContext } => {
-    
+
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
     const [table, setTable] = useState<Array<ITable>>([]);
-    
+    const handleToggleLogged = () => {
+        setIsLoggedIn(!isLoggedIn);
+    }
+
     const handleCreateTable = (newTable: ITable) => {
         setTable([ ...table, newTable ]);
     }
@@ -31,7 +39,9 @@ const useFetch = (): { value: IContext } => {
 
     return {
         value: {
+            isLoggedIn,
             table,
+            handleToggleLogged,
             handleCreateTable,
             handleDeleteTable
         }

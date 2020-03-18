@@ -10,28 +10,68 @@ import Sample from '../../Routes/Sample';
 import ParsedHtml from '../../Routes/ParsedHtml';
 import ParsedIncome from '../../Routes/ParsedIncome';
 import Portal from '../../Routes/Portal';
+import Layout from '../Layout';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const AppContainer = () => (
-    <AppProvider>
-        <AppPresenter />
-    </AppProvider> 
-);
-const AppPresenter = () => (
-    <BrowserRouter>
-        <Switch>
-            <Route exact path={"/devExpress"} component={DevExpress}/>
-            <Route path={"/sample"} component={Sample}/>
-            <Route path={"/parsedHtml"} component={ParsedHtml}/>
-            <Route path={"/parsedIncome"} component={ParsedIncome}/>
-            <Route path={"/portal"} component={Portal}/>
-            <Redirect to={"/"} from={"*"}/>
-        </Switch>
-    </BrowserRouter>
+const AppContainer = () => {
+    return (
+        <AppProvider>
+            <AppPresenter />
+        </AppProvider> 
+    );
+}
+
+const AppPresenter = () => {
+    const { isLoggedIn } = useAppContext();
+    return (
+            <Layout>
+                <BrowserRouter>
+                    {
+                        isLoggedIn ? <UserLoggedIn /> : <UserLoggedOut />
+                    }      
+                </BrowserRouter>
+            </Layout>
+    )
+}
+
+
+const UserLoggedIn = () => (
+    <Switch>
+        <Route exact path={"/grid"} component={DevExpress}/>
+        {/* <Route path={"/sample"} component={Sample}/>
+        <Route path={"/parsedHtml"} component={ParsedHtml}/>
+        <Route path={"/parsedIncome"} component={ParsedIncome}/>
+        <Route path={"/portal"} component={Portal}/> */}
+        <Redirect to={"/"} from={"*"}/>
+    </Switch>
+)
+
+const UserLoggedOut = () =>(
+    <Switch>
+        <Route exact path={"/"} component={DevExpress}/>
+        <Redirect to={"/"} from={"*"}/>
+    </Switch>
 )
 
 export default AppContainer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // const useInputNumber = ({ limit, initValue }: { limit?: number, initValue: number}): IUseInputNumber => {
 //     const [value, setValue] = useState<number>(initValue);

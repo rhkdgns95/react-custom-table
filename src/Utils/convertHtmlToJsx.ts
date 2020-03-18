@@ -9,6 +9,4 @@ import parse from 'html-react-parser'
  *  - 예외상황 예측해서 체크할 필요성이 있음.
  */
 
-export const convertedHtmlToJsx = (html: string) => {
-    return parse(`${html}`);
-}
+export const convertedHtmlToJsx = (html: string) => parse(`${html}`);
