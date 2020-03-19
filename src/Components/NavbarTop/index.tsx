@@ -1,2 +1,2 @@
-import NavbarTop from "./NavbarTopContainer";
+import NavbarTop from "./NavbarTop";
 export default NavbarTop;

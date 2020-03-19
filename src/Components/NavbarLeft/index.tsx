@@ -1,2 +1,2 @@
-import NavbarLeft from "./NavbarLeftContainer";
+import NavbarLeft from "./NavbarLeft";
 export default NavbarLeft;

@@ -44,7 +44,7 @@ interface IState {
   currentFilter: any;  
   pageSize: number;    
   selectTextOnEditStart: boolean;
-  startEditAction: string;
+  startEditAction: 'click' | 'dblClick';
 }
 class GridContainer extends React.Component<any, IState> {
     orders: any;
@@ -60,10 +60,10 @@ class GridContainer extends React.Component<any, IState> {
     this.state = {
       showFilterRow: true,
       showHeaderFilter: true,
-      currentFilter: this.applyFilterTypes[0].key,
+      currentFilter: 1,
       pageSize: 10,
       selectTextOnEditStart: true,
-      startEditAction: 'click'
+      startEditAction: 'dblClick'
     };
 
     this.defaultPageSize = 10;
@@ -113,11 +113,55 @@ class GridContainer extends React.Component<any, IState> {
     this.onShowHeaderFilterChanged = this.onShowHeaderFilterChanged.bind(this);
     this.onCurrentFilterChanged = this.onCurrentFilterChanged.bind(this);
     this.onChangePageSize = this.onChangePageSize.bind(this);
+    this.onSelectTextOnEditStartChanged = this.onSelectTextOnEditStartChanged.bind(this);
+    this.onStartEditActionChanged = this.onStartEditActionChanged.bind(this);
   }
 
   render() {
     return (
       <div>
+         <div className="options">
+          {/* <div className="caption">Options</div> */}
+          {/* Start - Edit Options */}
+          <div className="option">
+            <span>Start Edit Action</span>
+                &nbsp;
+            <SelectBox
+              items={['click', 'dblClick']}
+              value={this.state.startEditAction}
+              onValueChanged={this.onStartEditActionChanged}>
+            </SelectBox>
+          </div>
+          <div className="option">
+            <CheckBox
+              value={this.state.selectTextOnEditStart}
+              text="Select Text on Edit Start"
+              onValueChanged={this.onSelectTextOnEditStartChanged}
+            />
+          </div>
+          {/* End - Edit Options */}
+          {/* Start - Filter Options */}
+          <div className="option">
+            <span>Apply Filter </span>
+            <SelectBox items={this.applyFilterTypes}
+              value={this.state.currentFilter}
+              onValueChanged={this.onCurrentFilterChanged}
+              valueExpr="key"
+              displayExpr="name"
+              disabled={!this.state.showFilterRow} />
+          </div>
+          <div className="option">
+            <CheckBox text="Filter Row"
+              value={this.state.showFilterRow}
+              onValueChanged={this.onShowFilterRowChanged} />
+          </div>
+          <div className="option">
+            <CheckBox text="Header Filter"
+              value={this.state.showHeaderFilter}
+              onValueChanged={this.onShowHeaderFilterChanged} />
+          </div>
+          {/* End - Filter Options */}
+        </div>
         pageCount: 
         <select onChange={this.onChangePageSize} defaultValue={this.defaultPageSize}>
           {
@@ -185,29 +229,8 @@ class GridContainer extends React.Component<any, IState> {
             caption="City">
             <HeaderFilter allowSearch={true} />
           </Column>
-        </DataGrid>
-        <div className="options">
-          <div className="caption">Options</div>
-          <div className="option">
-            <span>Apply Filter </span>
-            <SelectBox items={this.applyFilterTypes}
-              value={this.state.currentFilter}
-              onValueChanged={this.onCurrentFilterChanged}
-              valueExpr="key"
-              displayExpr="name"
-              disabled={!this.state.showFilterRow} />
-          </div>
-          <div className="option">
-            <CheckBox text="Filter Row"
-              value={this.state.showFilterRow}
-              onValueChanged={this.onShowFilterRowChanged} />
-          </div>
-          <div className="option">
-            <CheckBox text="Header Filter"
-              value={this.state.showHeaderFilter}
-              onValueChanged={this.onShowHeaderFilterChanged} />
-          </div>
-        </div>
+        </DataGrid> 
+       
       </div>
     );
   }
@@ -248,6 +271,29 @@ class GridContainer extends React.Component<any, IState> {
   clearFilter() {
     this.dataGrid.instance.clearFilter();
   }
+   /**
+   *  onSelectTextOnEditStartChanged = () => {}
+   *  
+   *  - StartEditAciton 속성 - 한번 클릭 / 더블클릭 중 택 1.
+   */
+  onSelectTextOnEditStartChanged(args) {
+    this.setState({
+      selectTextOnEditStart: args.value
+    });
+  }
+  /**
+   *  onStartEditActionChanged = () => {}
+   *  
+   *  -텍스트 변경 완료.
+   */
+  onStartEditActionChanged(args) {
+    this.setState({
+      startEditAction: args.value
+    });
+  }
+
+  /** Start New Function */
+
   /**
    *  onChangePageSize = () => {} 
    *  - pageSize 변경 이벤트
@@ -258,6 +304,7 @@ class GridContainer extends React.Component<any, IState> {
       pageSize: parseInt(value)
     });
   }
+ /** End New Function */
 }
 
 function getOrderDay(rowData) {

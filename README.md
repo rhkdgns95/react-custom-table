@@ -85,3 +85,24 @@
 3. Test
 > - <a href="https://stackblitz.com/edit/react-ed7gnm?file=index.js ">syncfusion - autofill</a> - test3.txt
 > - <a href="https://ej2.syncfusion.com/react/demos/#/material/grid/filter-menu">syncfusion - sort + filter</a> - test4.txt
+
+
+
+
+# 03-19(목) 케어다
+
+#### 1. 워드파일 -> html파일 변환
+> - 워드파일의 양식 문서를 html파일로 변환하여, 각 셀에 알맞은 데이터를 추가 시키는 방안.
+   (새로운 HTML을 작성하지 않아도 됨)
+
+#### 2. DevExpress 
+> - Excel 파일 출력 시, 사용자 지정 Header, Footer 추가 확인.
+> 인쇄출력과 Pdf변환과 [Advanced Export] 기능을 추가하는 방법 확인중 (진행중)
+ 
+#### 3. Grid Table
+> - DevExpress의 Grid의 기능들을 통합한 형태의 [결제내역 테이블]작성. (진행중)
+> - <img src="./public/images/table.png" style="max-width: 100%;"/>
+#### 4. Fuse React
+> - React의 Redux를 상태 관리법을 확인.
+> - 크게 Context와의 큰 차이는 '전역'과 '상속'의 차이라고 생각함.
+  ( Redux - 전역 저장소 / Context - 계층구조의 데이터 저장소)
