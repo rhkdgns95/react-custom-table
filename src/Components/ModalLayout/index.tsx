@@ -1,2 +1,2 @@
-import ModalLayout from "./ModalLayoutContainer";
+import ModalLayout from "./ModalLayout";
 export default ModalLayout;

@@ -1,5 +1,5 @@
 import React from 'react';
-import HtmlContainer from '../../Components/HtmlContainer';
+import HtmlContainer from '../../Components/HtmlLayout';
 
 const ParsedIncomeContainer = () => {
     
