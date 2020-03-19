@@ -25,13 +25,13 @@ const AppContainer = () => {
 const AppPresenter = () => {
     const { isLoggedIn } = useAppContext();
     return (
-            <Layout>
-                <BrowserRouter>
-                    {
-                        isLoggedIn ? <UserLoggedIn /> : <UserLoggedOut />
-                    }      
-                </BrowserRouter>
-            </Layout>
+        <Layout>
+            <BrowserRouter>
+                {
+                    isLoggedIn ? <UserLoggedIn /> : <UserLoggedOut />
+                }      
+            </BrowserRouter>
+        </Layout>
     )
 }
 

@@ -1,8 +1,11 @@
 import React from 'react';
-import DataGrid, { Column, FilterRow, HeaderFilter, SearchPanel, Pager, Paging, Export, Editing } from 'devextreme-react/data-grid';
-import { SelectBox, CheckBox } from 'devextreme-react';
+import DataGrid, { Column, FilterRow, HeaderFilter, SearchPanel, Pager, Paging, Export, Editing, Selection, Summary, TotalItem } from 'devextreme-react/data-grid';
+import { SelectBox, CheckBox, Button } from 'devextreme-react';
 import service from './data';
 import { useAppContext } from '../../Components/App/AppProvider';
+import DataSource from 'devextreme/data/data_source';
+import ArrayStore from 'devextreme/data/array_store';
+
 
 /**
  * 
@@ -45,7 +48,20 @@ interface IState {
   pageSize: number;    
   selectTextOnEditStart: boolean;
   startEditAction: 'click' | 'dblClick';
+  mode: 'nextColumn' | 'widget';
+  selectedItemKeys: Array<number>;
 }
+
+const resizingModes: Array<'nextColumn' | 'widget'> = ['nextColumn', 'widget'];
+
+
+const dataSource = new DataSource({
+  store: new ArrayStore({
+    data: service.getOrders(),
+    key: 'ID'
+  })
+});
+
 class GridContainer extends React.Component<any, IState> {
     orders: any;
     applyFilterTypes: any;
@@ -63,13 +79,15 @@ class GridContainer extends React.Component<any, IState> {
       currentFilter: 1,
       pageSize: 10,
       selectTextOnEditStart: true,
-      startEditAction: 'dblClick'
+      startEditAction: 'dblClick',
+      mode: resizingModes[0],
+      selectedItemKeys: []
     };
 
     this.defaultPageSize = 10;
-    this.orders = service.getOrders();
-    
-    console.log("ORDERS: ", this.orders);
+    // 데이터 바뀌면, 아래 orders는 dataSource와 다르게 넣어줄 것.
+    this.orders = dataSource;
+    console.log("ORDERS: ", this.orders.store()._array);
     // this.pageIndex = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
     this.pageIndex = Array.from({ length: 10 }, (_, count) => (count + 1) * 2);
     
@@ -115,6 +133,9 @@ class GridContainer extends React.Component<any, IState> {
     this.onChangePageSize = this.onChangePageSize.bind(this);
     this.onSelectTextOnEditStartChanged = this.onSelectTextOnEditStartChanged.bind(this);
     this.onStartEditActionChanged = this.onStartEditActionChanged.bind(this);
+    this.changeResizingMode = this.changeResizingMode.bind(this);
+    this.selectionChanged = this.selectionChanged.bind(this);
+    this.deleteRecords = this.deleteRecords.bind(this);
   }
 
   render() {
@@ -161,6 +182,15 @@ class GridContainer extends React.Component<any, IState> {
               onValueChanged={this.onShowHeaderFilterChanged} />
           </div>
           {/* End - Filter Options */}
+          {/* Start - Resizing */}
+          <div className="option">
+            <span>Column resizing mode:&nbsp;</span>
+            <SelectBox items={resizingModes}
+              value={this.state.mode}
+              width={250}
+              onValueChanged={this.changeResizingMode} />
+          </div>
+          {/* End - Resizing */}
         </div>
         pageCount: 
         <select onChange={this.onChangePageSize} defaultValue={this.defaultPageSize}>
@@ -168,10 +198,40 @@ class GridContainer extends React.Component<any, IState> {
             this.pageIndex.map((item, key) => <option key={key} value={item}>{ item }</option> )
           }
         </select>
+        
+
+        <Editing
+            mode="cell"
+            allowUpdating={true} />
+        <Button id="gridDeleteSelected"
+          text="Delete Selected Records"
+          height={34}
+          disabled={!this.state.selectedItemKeys.length}
+          onClick={this.deleteRecords} />
         <DataGrid id="gridContainer"
           ref={(ref) => this.dataGrid = ref}
           dataSource={this.orders}
-          showBorders={true}>
+          showBorders={true}
+          allowColumnResizing={true}
+          selectedRowKeys={this.state.selectedItemKeys}
+          onSelectionChanged={this.selectionChanged}
+          onRowUpdated={data => {
+            // Table 전체 행 업데이트 완료시 실행됨.
+            console.log("onRowUpdated: ", data);
+          }}
+          onRowUpdating={data => {
+            // Table 전체 행 업데이트 중 실행됨. 
+            // newData와 oldData를 제공해줌.
+            // 저장 클릭 시 해당 이벤트가 실행됨.
+
+            console.log("onRowUpdating: ", data);
+            return data;
+          }}
+          onEditorPrepared={data => {
+            // console.log("DATA: ", data);
+            return data;
+          }}>
+          <Selection mode="multiple" />
           <Paging 
             defaultPageSize={this.defaultPageSize} 
             pageSize={this.state.pageSize}
@@ -229,8 +289,35 @@ class GridContainer extends React.Component<any, IState> {
             caption="City">
             <HeaderFilter allowSearch={true} />
           </Column>
+          <Summary>
+            <TotalItem
+              column="OrderNumber"
+              summaryType="count" />
+            <TotalItem
+              column="OrderDate"
+              summaryType="min"
+              customizeText={this.customizeDate} />
+            <TotalItem
+              column="OrderNumber"
+              // summaryType=""
+              customizeText={data => {
+                console.log("DATA: ", data);
+                console.log("this.state.selectedItemKeys[0];: ", this.state.selectedItemKeys);
+                let total: number = 0;
+                this.state.selectedItemKeys.map(currentId => {
+                  const currentData = this.orders.store()._array.find(item => {
+                    return item.ID === currentId;
+                  });
+                  // console.log("currentData: ", currentData);
+                  if(currentData && currentData.SaleAmount) {
+                    total += currentData.SaleAmount;
+                  }
+                });
+                return total > 0 ? `Checked: $${total}` : ``;
+              }}
+              valueFormat="currency" />
+          </Summary>
         </DataGrid> 
-       
       </div>
     );
   }
@@ -250,7 +337,7 @@ class GridContainer extends React.Component<any, IState> {
 
       return results;
     };
-  }
+  } 
   onShowFilterRowChanged(e) {
     this.setState({
       showFilterRow: e.value
@@ -271,6 +358,32 @@ class GridContainer extends React.Component<any, IState> {
   clearFilter() {
     this.dataGrid.instance.clearFilter();
   }
+  changeResizingMode(data) {
+    this.setState({ mode: data.value });
+  }
+  /**
+   *  deleteRecords = () => {}
+   *  
+   *  - 데이터를 삭제 했을경우, 발생하는 이벤트
+   */
+  deleteRecords() {
+    const isConfirm = window.confirm("삭제하시겠습니까?");
+    console.log("삭제될 키값: ", this.state.selectedItemKeys);
+    if(isConfirm) {
+      this.state.selectedItemKeys.forEach((key) => {
+        this.orders.store().remove(key);
+      });
+      this.setState({
+        selectedItemKeys: []
+      });
+      this.orders.reload();
+    } 
+  }
+  selectionChanged(data) {
+    this.setState({
+      selectedItemKeys: data.selectedRowKeys
+    });
+  }
    /**
    *  onSelectTextOnEditStartChanged = () => {}
    *  
@@ -290,6 +403,11 @@ class GridContainer extends React.Component<any, IState> {
     this.setState({
       startEditAction: args.value
     });
+  }
+  customizeDate(data) {
+    return "";
+    // return `First: ${ Globalize.formatDate(data.value, { date: 'medium' })}`;
+    // return `First: ${data})}`;
   }
 
   /** Start New Function */
