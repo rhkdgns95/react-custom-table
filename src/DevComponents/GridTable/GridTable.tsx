@@ -46,6 +46,7 @@ interface IState {
   showHeaderFilter: any;
   currentFilter: any;  
   pageSize: number;    
+  isGridDetails: boolean;
   selectTextOnEditStart: boolean;
   startEditAction: 'click' | 'dblClick';
   mode: 'nextColumn' | 'widget';
@@ -81,7 +82,8 @@ class GridContainer extends React.Component<any, IState> {
       selectTextOnEditStart: true,
       startEditAction: 'dblClick',
       mode: resizingModes[0],
-      selectedItemKeys: []
+      selectedItemKeys: [],
+      isGridDetails: false
     };
 
     this.defaultPageSize = 10;
@@ -136,12 +138,16 @@ class GridContainer extends React.Component<any, IState> {
     this.changeResizingMode = this.changeResizingMode.bind(this);
     this.selectionChanged = this.selectionChanged.bind(this);
     this.deleteRecords = this.deleteRecords.bind(this);
+    this.toggleGridTableDetails = this.toggleGridTableDetails.bind(this);
   }
 
   render() {
     return (
       <div>
-         <div className="options">
+        <button onClick={this.toggleGridTableDetails}>
+          { this.state.isGridDetails ? "숨기기" : "자세히" }
+        </button>
+         <div className="options" style={this.state.isGridDetails ? { height: "auto", opacity: 1, transition: ".5s" } : { opacity: 0, height: 0, zIndex: -1, cursor: "default", transform: 'scale(0)', marginRight: "20%" } }>
           {/* <div className="caption">Options</div> */}
           {/* Start - Edit Options */}
           <div className="option">
@@ -239,8 +245,9 @@ class GridContainer extends React.Component<any, IState> {
           <Editing
             mode="batch"
             allowUpdating={true}
+            allowAdding={true}
             selectTextOnEditStart={this.state.selectTextOnEditStart}
-            startEditAction={this.state.startEditAction} 
+            startEditAction={this.state.startEditAction}
           />
           <Pager
             showNavigationButtons={true}
@@ -260,8 +267,10 @@ class GridContainer extends React.Component<any, IState> {
           <SearchPanel visible={true}
             width={240}
             placeholder="Search..." />
-          <Column dataField="OrderNumber"
+          <Column 
+          dataField="OrderNumber"
             width={140}
+            dataType="number"
             caption="Invoice Number">
             <HeaderFilter groupInterval={10000} />
           </Column>
@@ -281,6 +290,7 @@ class GridContainer extends React.Component<any, IState> {
             alignment="right"
             dataType="number"
             format="currency"
+            // hidingPriority={0}
             editorOptions={saleAmountEditorOptions}>
             <HeaderFilter dataSource={this.saleAmountHeaderFilter} />
           </Column>
@@ -300,21 +310,21 @@ class GridContainer extends React.Component<any, IState> {
             <TotalItem
               column="OrderNumber"
               // summaryType=""
-              customizeText={data => {
-                console.log("DATA: ", data);
-                console.log("this.state.selectedItemKeys[0];: ", this.state.selectedItemKeys);
-                let total: number = 0;
-                this.state.selectedItemKeys.map(currentId => {
-                  const currentData = this.orders.store()._array.find(item => {
-                    return item.ID === currentId;
-                  });
-                  // console.log("currentData: ", currentData);
-                  if(currentData && currentData.SaleAmount) {
-                    total += currentData.SaleAmount;
-                  }
-                });
-                return total > 0 ? `Checked: $${total}` : ``;
-              }}
+              // customizeText={data => {
+              //   console.log("DATA: ", data);
+              //   console.log("this.state.selectedItemKeys[0];: ", this.state.selectedItemKeys);
+              //   let total: number = 0;
+              //   this.state.selectedItemKeys.map(currentId => {
+              //     const currentData = this.orders.store()._array.find(item => {
+              //       return item.ID === currentId;
+              //     });
+              //     // console.log("currentData: ", currentData);
+              //     if(currentData && currentData.SaleAmount) {
+              //       total += currentData.SaleAmount;
+              //     }
+              //   });
+              //   return total > 0 ? `Checked: $${total}` : ``;
+              // }}
               valueFormat="currency" />
           </Summary>
         </DataGrid> 
@@ -420,6 +430,15 @@ class GridContainer extends React.Component<any, IState> {
     const { target: { value }} = event;
     this.setState({
       pageSize: parseInt(value)
+    });
+  }
+  /**
+   *  func toggleGridTableDetails
+   *   - Grid Table을 '자세히 보기'
+   */
+  toggleGridTableDetails() {
+    this.setState({
+      isGridDetails: !this.state.isGridDetails
     });
   }
  /** End New Function */
