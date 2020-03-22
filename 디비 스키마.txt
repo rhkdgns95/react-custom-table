@@ -1,0 +1,24 @@
+* 테이블 명: Payment
+* 구분
+
+1. tscode(int, auto-increment):	신청 키
+2. tok(varchar): 		구분(대기, 승인, 취소)
+3. tnumber(int): 		신청고유번호
+4. mname(varchar): 		성명
+5. mid(varchar):		아이디
+6. spay(int): 		결제(예정)금액
+7. trno(varchar): 		PG승인번호
+8. reg_date(datetime):	가입일시(서비스 신청일)
+9. pay_dtm(datetime):	결제일시(서비스 결제일)
+10. content(varchar):	내용
+11. bpay(int):		금액
+12. qpay(int):		금액(퀵)
+13. brefund(int):		기본형 환불금
+14. qrefund(int):		퀵형 환불금
+15. accea(int):		갯수
+16. qaccea(int):		갯수(퀵)
+17. req_day(varchar):	기본형 신청기간
+18. req_qday(varchar):	퀵형 신청기간
+19. endday(datetime):	기본형 만료일
+20. qendday(datetime):	퀵형 만료일
+21. msg2(varchar): 		응답 메시지

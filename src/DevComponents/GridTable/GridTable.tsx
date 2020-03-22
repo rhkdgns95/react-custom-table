@@ -144,7 +144,19 @@ class GridContainer extends React.Component<any, IState> {
   render() {
     return (
       <div>
-        <button onClick={this.toggleGridTableDetails}>
+        <button onClick={this.toggleGridTableDetails} style={{
+            backgroundColor: "white",
+            padding: "5px 7px",
+            borderRadius: "3px",
+            border: "1px solid #dfdfdf",
+            cursor: "pointer",
+            margin: "5px 0",
+            textAlign: 'right',
+            marginLeft: 'auto',
+            display: 'block',
+            fontSize: '11px',
+            color: 'gray'
+        }}>
           { this.state.isGridDetails ? "숨기기" : "자세히" }
         </button>
          <div className="options" style={this.state.isGridDetails ? { height: "auto", opacity: 1, transition: ".5s" } : { opacity: 0, height: 0, zIndex: -1, cursor: "default", transform: 'scale(0)', marginRight: "20%" } }>
@@ -154,7 +166,7 @@ class GridContainer extends React.Component<any, IState> {
             <span>Start Edit Action</span>
                 &nbsp;
             <SelectBox
-              items={['click', 'dblClick']}
+              items={['click', 'dblClick']} 
               value={this.state.startEditAction}
               onValueChanged={this.onStartEditActionChanged}>
             </SelectBox>
@@ -199,7 +211,13 @@ class GridContainer extends React.Component<any, IState> {
           {/* End - Resizing */}
         </div>
         pageCount: 
-        <select onChange={this.onChangePageSize} defaultValue={this.defaultPageSize}>
+        <select onChange={this.onChangePageSize} defaultValue={this.defaultPageSize} style={{
+          padding: "5px 7px",
+          borderRadius: "3px",
+          border: "1px solid #dfdfdf",
+          cursor: "pointer",
+          margin: "3px"
+        }}>
           {
             this.pageIndex.map((item, key) => <option key={key} value={item}>{ item }</option> )
           }
@@ -268,9 +286,10 @@ class GridContainer extends React.Component<any, IState> {
             width={240}
             placeholder="Search..." />
           <Column 
-          dataField="OrderNumber"
+            dataField="OrderNumber"
             width={140}
             dataType="number"
+            allowEditing={false}
             caption="Invoice Number">
             <HeaderFilter groupInterval={10000} />
           </Column>
