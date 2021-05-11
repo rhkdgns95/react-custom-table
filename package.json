@@ -18,7 +18,7 @@
     "devextreme": "19.2",
     "devextreme-react": "19.2",
     "html-react-parser": "^0.10.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
